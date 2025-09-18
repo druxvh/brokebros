@@ -7,6 +7,8 @@ import { ItemCard } from "@/components/general/List";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { TmdbItem, TmdbResponse } from "@/types/types";
 
+export const dynamic = "force-dynamic";
+
 // Deduplicate by id to prevent result ids and known for data ids
 function dedupeResults(results: TmdbItem[]): TmdbItem[] {
     const seen = new Set<number>()

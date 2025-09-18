@@ -5,6 +5,8 @@ import Loader from "@/components/general/Loader";
 import { useQuery } from "@tanstack/react-query"
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default function Page() {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -17,7 +19,7 @@ export default function Page() {
         },
         staleTime: 1000 * 60 * 60,
     });
-    
+
     const topRated = useQuery({
         queryKey: ['movie', 'top_rated'],
         queryFn: async ({ signal }) => {

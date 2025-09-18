@@ -5,6 +5,8 @@ import MovieDetail from '@/components/general/MovieDetails'
 import { useQuery } from '@tanstack/react-query'
 import { Suspense, use } from 'react'
 
+export const dynamic = "force-dynamic";
+
 export default function Page({
     params
 }: {
