@@ -11,16 +11,18 @@ export default function Page({
     params: Promise<{ id: string }>
 }) {
     const { id } = use(params)
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
     const { data, isLoading, error } = useQuery({
         queryKey: ['movie', id],
         queryFn: async ({ signal }) => {
-            const res = await fetch(`/api/movie/${id}`, { signal })
+            const res = await fetch(`${baseUrl}/api/movie/${id}`, { signal })
             if (!res.ok) throw new Error("Movie fetch failed")
             return res.json()
         },
         staleTime: 1000 * 60 * 60,
     })
+
     if (isLoading) return <Loader />
     if (error) return <div>Error: {(error as Error).message}</div>
 

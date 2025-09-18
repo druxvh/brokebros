@@ -8,11 +8,11 @@ import { Suspense, use } from 'react'
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
     const { id } = use(params)
-
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const { data, isLoading, error } = useQuery({
         queryKey: ['tv', id],
         queryFn: async ({ signal }) => {
-            const res = await fetch(`/api/tv/${id}`, { signal })
+            const res = await fetch(`${baseUrl}/api/tv/${id}`, { signal })
             if (!res.ok) throw new Error("TV fetch failed")
             return res.json()
         },

@@ -43,6 +43,7 @@ export default function SearchResults() {
     const router = useRouter()
     const query = searchParams.get("q") || ""
 
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
     useEffect(() => {
         if (!query || query.length === 0) {
@@ -54,7 +55,7 @@ export default function SearchResults() {
     const { data, isLoading, isError } = useQuery<TmdbResponse<TmdbItem>>({
         queryKey: ["search", query],
         queryFn: async ({ signal }) => {
-            const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal }); // aborts the previous request if a new one is made
+            const res = await fetch(`${baseUrl}/api/search?q=${encodeURIComponent(query)}`, { signal }); // aborts the previous request if a new one is made
             if (!res.ok) throw new Error("Search failed");
             return res.json() as Promise<TmdbResponse<TmdbItem>>; // returns TmdbResponse
         },

@@ -5,7 +5,8 @@ import { TmdbItem, TmdbResponse } from "@/types/types";
 import { Suspense } from "react";
 
 export default async function Home() {
-  const baseUrl = "http://localhost:3000";
+
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   const [movieRes, tvRes] = await Promise.all([
     fetch(`${baseUrl}/api/trending/movie/day`, { next: { revalidate: 3600 } }), // 1 hour
