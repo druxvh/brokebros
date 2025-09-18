@@ -3,6 +3,7 @@
 import List from "@/components/general/List"
 import Loader from "@/components/general/Loader";
 import { useQuery } from "@tanstack/react-query"
+import { Suspense } from "react";
 
 export default function Page() {
 
@@ -29,8 +30,10 @@ export default function Page() {
 
     return (
         <>
-            <List title="Popular" data={popular.data?.results} />
-            <List title="Top Rated" data={topRated.data?.results} />
+            <Suspense fallback={<Loader />}>
+                <List title="Popular" data={popular.data?.results} />
+                <List title="Top Rated" data={topRated.data?.results} />
+            </Suspense>
         </>
     );
 }

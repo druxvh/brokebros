@@ -1,6 +1,8 @@
 import List from "@/components/general/List";
+import Loader from "@/components/general/Loader";
 import { MainCarousel } from "@/components/general/MainCarousel";
 import { TmdbItem, TmdbResponse } from "@/types/types";
+import { Suspense } from "react";
 
 export default async function Home() {
   const baseUrl = "http://localhost:3000";
@@ -26,8 +28,10 @@ export default async function Home() {
 
   return (
     <div className="space-y-8">
-      <MainCarousel data={data} />
-      <List title="Trending Now" data={data} />
+      <Suspense fallback={<Loader />}>
+        <MainCarousel data={data} />
+        <List title="Trending Now" data={data} />
+      </Suspense>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import Loader from '@/components/general/Loader'
 import MovieDetail from '@/components/general/MovieDetails'
 import { useQuery } from '@tanstack/react-query'
-import { use } from 'react'
+import { Suspense, use } from 'react'
 
 export default function Page({
     params
@@ -27,5 +27,9 @@ export default function Page({
     // If no data, return not found
     if (!data) return <div>Movie not found</div>
 
-    return <MovieDetail movie={data} />
+    return (<>
+        <Suspense fallback={<Loader />}>
+            <MovieDetail movie={data} />
+        </Suspense>
+    </>)
 }

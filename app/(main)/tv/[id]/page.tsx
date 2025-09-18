@@ -3,7 +3,7 @@
 import Loader from '@/components/general/Loader'
 import TVDetail from '@/components/general/TVDetails'
 import { useQuery } from '@tanstack/react-query'
-import { use } from 'react'
+import { Suspense, use } from 'react'
 
 export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
@@ -24,5 +24,11 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     // If no data, return not found
     if (!data) return <div>TV show not found</div>
 
-    return <TVDetail tv={data} />
+    return (
+        <>
+            <Suspense fallback={<Loader />}>
+                <TVDetail tv={data} />
+            </Suspense>
+        </>
+    )
 }
