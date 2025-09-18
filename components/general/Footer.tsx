@@ -4,7 +4,7 @@ import { Film } from "lucide-react";
 
 export default function Footer() {
     return (
-        <footer className="w-full mt-20 border-t border-border h-fit ">
+        <footer className="hidden sm:block w-full mt-20 border-t border-border h-fit ">
             <div className="w-full flex items-center justify-between p-4">
                 {/* Logo */}
                 <div className="flex items-center gap-2 text-gray-200">

@@ -1,22 +1,28 @@
+'use client'
+
+import Loader from '@/components/general/Loader'
 import TVDetail from '@/components/general/TVDetails'
-// import { getDetails } from '@/lib/tmdb'
+import { useQuery } from '@tanstack/react-query'
+import { use } from 'react'
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
-    const { id } = await params
+    const { id } = use(params)
 
-    // const data = await getDetails("tv", id)
-    const baseUrl = "http://localhost:3000"
-
-    const res = await fetch(`${baseUrl}/api/tv/${id}`, {
-        next: { revalidate: 300 }
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['tv', id],
+        queryFn: async ({ signal }) => {
+            const res = await fetch(`/api/tv/${id}`, { signal })
+            if (!res.ok) throw new Error("TV fetch failed")
+            return res.json()
+        },
+        staleTime: 1000 * 60 * 60,
     })
+    if (isLoading) return <Loader />
+    if (error) return <div>Error: {(error as Error).message}</div>
 
-    if (!res.ok) {
-        throw new Error("fetch failed")
-    }
-
-    const data = await res.json()
+    // If no data, return not found
+    if (!data) return <div>TV show not found</div>
 
     return <TVDetail tv={data} />
 }

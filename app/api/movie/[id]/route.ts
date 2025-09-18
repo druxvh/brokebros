@@ -1,3 +1,4 @@
+import { TmdbMovieItemById } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 const baseUrl = process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
@@ -29,20 +30,19 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
                 { status: 502 }
             );
         }
-        const data = await res.json();
+        const data:TmdbMovieItemById = await res.json();
 
         // const resultsWithMediaType = data.results?.map((item) => ({ ...item, media_type: item.media_type || 'movie' })) || [];
 
          // Add media_type for consistency (movie detail doesn't have results array)
-        if (!data.media_type) {
-            data.media_type = 'movie';
-        }
+        // if (!data.media_type) {
+        //     data.media_type = 'movie';
+        // }
 
         // data.results = resultsWithMediaType;
 
         return NextResponse.json(data, { status: 200 });
     } catch (err) {
-        console.error('TMDB proxy error', err);
         return NextResponse.json({ message: 'Proxy fetch failed', error: String(err) }, { status: 502 });
     }
 }

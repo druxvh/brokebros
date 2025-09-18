@@ -26,8 +26,6 @@ export function MainCarousel({ data }: {
         const media = item.media_type === 'tv' ? "tv" : 'movie'
         const id = item.id
 
-        console.log(item)
-
         // navigate
         router.push(`/${media}/${id}`)
 
@@ -77,6 +75,7 @@ export function MainCarousel({ data }: {
                     const title = item.title ?? item.name ?? "Untitled";
                     const overview = item.overview ?? "";
 
+
                     return (
                         <CarouselItem
                             key={item.id ?? index}
@@ -102,11 +101,12 @@ export function MainCarousel({ data }: {
                                         </div>
                                     )}
 
-                                    <div className="absolute left-4 bottom-4 max-w-[60%] rounded-md bg-black/60 p-4 text-white backdrop-blur-sm sm:max-w-[50%]">
-                                        <h3 className="text-lg font-semibold leading-tight">{title}</h3>
+                                    <div className="absolute left-0 bottom-0 sm:left-4 sm:bottom-4 w-full sm:rounded-sm bg-black/60 p-4 text-primary/90 backdrop-blur-sm sm:max-w-[50%]">
+                                        <h3 className="text-md sm:text-lg font-semibold leading-tight">{title}</h3>
                                         {overview && (
-                                            <p className="mt-1 text-sm line-clamp-2 text-neutral-200">{overview}</p>
+                                            <p className=" hidden sm:block mt-1 text-[8px] sm:text-sm line-clamp-2 text-neutral-200 text-wrap">{overview}</p>
                                         )}
+                                        { }
                                         <div className="mt-2 flex items-center gap-3 text-xs text-neutral-300">
                                             <span className="inline-flex items-center rounded-md bg-neutral-900/40 px-2 py-1">
                                                 ⭐ {Number(item.vote_average ?? 0).toFixed(1)}

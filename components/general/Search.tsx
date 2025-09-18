@@ -1,11 +1,3 @@
-// 'use client'
-
-// export default function Search() {
-//   return (
-//     <div>Search</div>
-//   )
-// }
-
 'use client'
 
 import { Button } from "../ui/button"
@@ -44,10 +36,8 @@ export default function Search() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(query)
         const trimmed = query.trim().replace(/\s+/g, " ");
         if (!trimmed) return
-        console.log(trimmed)
         setOpen(false)
 
         router.push(`/search?q=${encodeURIComponent(trimmed)}`)

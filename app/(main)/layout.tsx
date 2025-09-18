@@ -9,7 +9,7 @@ export default function Layout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen relative flex flex-col font-sans">
+        <div className="min-h-screen relative flex flex-col font-sans pb-20 sm:pb-0">
             <Header />
             {children}
             <NavDock />

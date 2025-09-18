@@ -39,10 +39,8 @@ export function Header() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(query)
         const trimmed = query.trim().replace(/\s+/g, " ");
         if (!trimmed) return
-        console.log(trimmed)
         setOpen(false)
 
         router.push(`/search?q=${encodeURIComponent(trimmed)}`)
@@ -51,23 +49,19 @@ export function Header() {
 
     return (
         <>
-            <header className="h-16 px-2 flex justify-between items-center border-b">
+            <header className="h-16 px-2 flex justify-between items-center outline">
                 {/* Logo */}
-                <div className="w-full flex items-center justify-center md:justify-start gap-2 ">
+                <div className="w-full flex items-center justify-start gap-2 ">
                     <Film className="size-6 text-red-500" />
-                    <Link href={'/'} className="text-xl text-primary/90  font-bold">BrokeBros</Link>
+                    <Link href={'/'} className="text-xl text-primary/90 font-bold">BrokeBros</Link>
                 </div>
-                <div className="hidden md:flex gap-2">
-                    {/* <Search /> */}
-                    <Button
-                        size={"icon"}
-                        variant={"ghost"}
-                        onClick={() => setOpen((p) => !p)}
-                    >
-                        {open ? <XIcon size={32} /> : <MagnifyingGlassIcon size={32} />}
-                    </Button>
-                    <ModeToggle />
-                </div>
+                <Button
+                    size={"icon"}
+                    variant={"ghost"}
+                    onClick={() => setOpen((p) => !p)}
+                >
+                    {open ? <XIcon size={32} /> : <MagnifyingGlassIcon size={32} />}
+                </Button>
             </header>
 
             {/* search input */}
@@ -89,7 +83,7 @@ export function Header() {
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     placeholder=""
-                                    className="flex-1 w-full truncate p-4 rounded-sm"
+                                    className="flex-1 w-full truncate p-4 rounded-sm border-none focus-visible:ring-0"
                                 />
                                 {/* Animated placeholder overlay */}
                                 {query.length === 0 && (
@@ -109,7 +103,7 @@ export function Header() {
                                     </div>
                                 )}
                             </div>
-                            <Button variant={"default"} type="submit">
+                            <Button variant={"default"} type="submit" className="border-none outline-none ring-0 rounded-sm">
                                 <MagnifyingGlassIcon size={32} />
                             </Button>
                         </form>

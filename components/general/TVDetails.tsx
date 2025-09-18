@@ -1,26 +1,23 @@
 "use client";
 
-import { TmdbTVItem } from "@/types/types";
+import { TmdbTVItemById } from "@/types/types";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "../ui/button";
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/original";
 
-export default function TVDetail({ tv }: { tv: Partial<TmdbTVItem> }) {
+export default function TVDetail({ tv }: { tv: Partial<TmdbTVItemById> }) {
 
     const [selectedSeason, setSelectedSeason] = useState<number>(1);
     const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
     const [iframeLoaded, setIframeLoaded] = useState(false);
-
 
     const id = tv.id
     const title = tv.name;
     const backdrop = tv.backdrop_path ?? tv.poster_path;
     const poster = tv.poster_path ?? tv.backdrop_path;
 
-
-    console.log(tv)
     return (
         <div className="mx-auto max-w-6xl">
             <div className="relative overflow-hidden shadow-lg">
@@ -107,7 +104,7 @@ export default function TVDetail({ tv }: { tv: Partial<TmdbTVItem> }) {
                                     variant={"ghost"}
                                     key={season.id}
                                     onClick={() => {
-                                        setSelectedSeason(season.season_number);
+                                        setSelectedSeason(season.season_number || 1);
                                         setSelectedEpisode(1);
                                     }}
                                     className={`px-4 py-2 rounded-sm text-sm font-medium transition cursor-pointer ${selectedSeason === season.season_number

@@ -41,8 +41,6 @@ export function ItemCard({ data }: { data: TmdbItem }) {
         const media = item.media_type === 'movie' ? "movie" : 'tv'
         const id = item.id
 
-        console.log(item)
-
         // navigate
         router.push(`/${media}/${id}`)
 
@@ -50,7 +48,7 @@ export function ItemCard({ data }: { data: TmdbItem }) {
 
     const title = data.title || data.name || "Untitled";
     const date = data.release_date || data.first_air_date || "Unknown";
-    const year = date ? new Date(date).getFullYear() : "-";
+    const year = String(date ? new Date(date).getFullYear() : "-");
     const rating = typeof data.vote_average === "number" ? data.vote_average.toFixed(1) : "0.0";
     const lang = (data.original_language || "en").toUpperCase();
     const mediaType = (data.media_type === "movie") ? "Movie" : "TV"

@@ -1,80 +1,107 @@
-// One movie/TV item
-export interface TmdbItem {
-    id: number;
-    title?: string;           // for movies
-    name?: string;            // for TV shows
-    original_title?: string;  // original movie title
-    original_name?: string;   // original TV show name
-    overview: string;
-    poster_path: string | null;
-    backdrop_path: string | null;
-    media_type?: "movie" | "tv" | "person";
-    original_language: string;
-    genre_ids: number[];
-    popularity: number;       // "hotness" score
-    release_date?: string;    // movies
-    first_air_date?: string;  // TV shows
-    vote_average: number;     // rating (0–10)
-    vote_count: number;       // number of votes
-    adult?: boolean;
-    video?: boolean;
-}
-
 // Full API response
-export interface TmdbResponse {
-    page: number;
-    results: TmdbItem[];
-    total_pages: number;
-    total_results: number;
+export interface TmdbResponse<T = TmdbItem> {
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
+  media_type?: "movie" | "tv"; // for trending endpoints
 }
 
-export type TmdbTVItem = {
-  id: number
-  name: string
-  original_name: string
-  overview: string
-  tagline?: string
-  homepage?: string
+// One movie/TV item (within results)
+// search response
+export interface TmdbItem {
+  id: number;
+  media_type?: "movie" | "tv" | "person";
 
-  poster_path?: string | null
+  // common fields
+  overview: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  original_language?: string;
+  genre_ids?: number[];
+  popularity?: number;       // "hotness" score
+  vote_average?: number;     // rating (0–10)
+  vote_count?: number;       // number of votes
+  adult: boolean;
+  video?: boolean;
+
+  // TV
+  name?: string;
+  original_name?: string;
+  first_air_date?: string;
+
+  // Movie
+  title?: string;           // for movies
+  original_title?: string;  // original movie title
+  release_date?: string;    // movies
+
+  // Person
+  known_for?: TmdbItem[]; // for persons
+}
+
+// TV item by ID
+export type TmdbTVItemById = {
+  adult?: boolean
   backdrop_path?: string | null
-
+  episode_run_time?: number[] // in minutes
   first_air_date?: string
-  last_air_date?: string
-  type: string
 
-  number_of_seasons: number
-  number_of_episodes: number
-  seasons: {
-    id: number
-    name: string
-    season_number: number
-    episode_count: number
+  genres?: { id?: number; name?: string }[]
+
+  id: number
+  languages?: string[]
+  last_air_date?: string
+  name?: string
+  number_of_seasons?: number
+  number_of_episodes?: number
+  original_name?: string
+  overview?: string
+  popularity?: number
+  poster_path?: string | null
+
+  seasons?: {
+    id?: number
+    name?: string
+    season_number?: number
+    episode_count?: number
     air_date?: string
     overview?: string
     poster_path?: string | null
     vote_average?: number
   }[]
 
-  genres: { id: number; name: string }[]
+  spoken_languages?: { english_name?: string; iso_639_1?: string; name?: string }[]
+  tagline?: string
+  homepage?: string
+  media_type?: "tv"
+  vote_average?: number
+  vote_count?: number
+}
 
-  created_by: { id: number; name: string; profile_path?: string | null }[]
-  languages: string[]
+// Movie item by ID
+export type TmdbMovieItemById = {
+  id: number;
+  title?: string;
+  original_title?: string;
+  overview?: string;
+  tagline?: string;
+  homepage?: string;
 
-  vote_average: number
-  vote_count: number
-  popularity: number
+  poster_path?: string | null;
+  backdrop_path?: string | null;
 
-  last_episode_to_air?: {
-    id: number
-    name: string
-    overview: string
-    air_date?: string
-    season_number: number
-    episode_number: number
-    still_path?: string | null
-    vote_average?: number
-  } | null
+  release_date?: string;
+  runtime?: number; // in minutes
+  budget?: number; // in USD
+  revenue?: number; // in USD 
+  adult?: boolean
+  genres?: { id?: number; name?: string }[];
 
-  
+  spoken_languages?: { iso_639_1?: string; name?: string }[];
+
+  vote_average?: number;
+  vote_count?: number;
+  popularity?: number;
+
+  imdb_id?: string;
 }

@@ -10,9 +10,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ message: 'Missing query parameter' }, { status: 400 });
     }
 
-    const url = `${baseUrl}/search/multi?query=${encodeURIComponent(
-        query
-    )}&include_adult=true`
+    const url = `${baseUrl}/search/multi?query=${encodeURIComponent(query)}`
 
     try {
         const res = await fetch(url, {
@@ -29,11 +27,11 @@ export async function GET(req: NextRequest) {
             );
         }
         const data = await res.json();
-        // return Response.json(data, { status: 200 });
+
         return NextResponse.json(data);
     } catch (err) {
         return NextResponse.json(
-            { error: "Something went wrong" },
+            { error: "Something went wrong", err: String(err) },
             { status: 500 }
         )
     }

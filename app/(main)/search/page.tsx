@@ -5,20 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/general/Loader";
 import { ItemCard } from "@/components/general/List";
 import { redirect, useSearchParams } from "next/navigation";
-
-// type MediaItem = {
-//     id: number
-//     title?: string
-//     name?: string
-//     poster_path?: string
-//     media_type: "movie" | "tv" | "person"
-//     known_for?: MediaItem[]
-// }
+import { TmdbItem, TmdbResponse } from "@/types/types";
 
 // Deduplicate by id to prevent result ids and known for data ids
-function dedupeResults(results: any[]) {
+function dedupeResults(results: TmdbItem[]): TmdbItem[] {
     const seen = new Set<number>()
-    const unique: any[] = []
+    const unique: TmdbItem[] = []
 
     for (const item of results) {
         if (!item.poster_path || (!item.title && !item.name)) continue
@@ -32,8 +24,8 @@ function dedupeResults(results: any[]) {
     return unique
 }
 
-function processResults(results: any[]) {
-    const flattened: any[] = []
+function processResults(results: TmdbItem[]): TmdbItem[] {
+    const flattened: TmdbItem[] = []
 
     results.forEach((item) => {
         if (item.media_type === "person" && item.known_for) {
@@ -56,18 +48,17 @@ export default function Page() {
     }
 
     // Fetch search results from API
-    const { data, isLoading, isError } = useQuery({
+    const { data, isLoading, isError } = useQuery<TmdbResponse<TmdbItem>>({
         queryKey: ["search", query],
         queryFn: async ({ signal }) => {
             const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal }); // aborts the previous request if a new one is made
             if (!res.ok) throw new Error("Search failed");
-            return res.json();
+            return res.json() as Promise<TmdbResponse<TmdbItem>>; // returns TmdbResponse
         },
         enabled: query.length > 0,
-        staleTime: 1000 * 60 * 60 * 12,
+        staleTime: 1000 * 60 * 60 * 1,
         // placeholderData: keepPreviousData, // keep previous data while loading new data
     });
-
 
     const results = useMemo(() => {
         const raw = data?.results ?? [];
@@ -76,9 +67,7 @@ export default function Page() {
 
 
     return (
-
-
-        <div className="min-h-screen w-full h-full p-4 flex flex-col justify-between items-center gap-6">
+        <div className="min-h-screen w-full h-full p-4 flex flex-col justify-start gap-6">
             <h2 className="text-lg text-center text-primary/90">Results for {" "}
                 <span className="font-bold">“{query}”</span>
             </h2>
@@ -104,6 +93,4 @@ export default function Page() {
         </div>
 
     )
-
 }
-

@@ -1,3 +1,4 @@
+import { TmdbResponse } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
 // This is an internal API route that proxies requests to the TMDB API for trending media.
@@ -28,7 +29,6 @@ export async function GET(
     const url = `${baseUrl}/trending/${encodedMediaType}/${encodedTimeWindow}`;
 
     try {
-
         const res = await fetch(url, {
             method: 'GET',
             headers: {
@@ -43,7 +43,7 @@ export async function GET(
                 { status: 502 }
             );
         }
-        const data = await res.json();
+        const data: TmdbResponse = await res.json();
 
         // return with cache headers (s-maxage for CDN, stale-while-revalidate for UX)
         return NextResponse.json(data, {
