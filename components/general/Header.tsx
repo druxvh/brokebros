@@ -1,6 +1,5 @@
 'use client'
 
-import { ModeToggle } from "../mode-toggle"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react"
