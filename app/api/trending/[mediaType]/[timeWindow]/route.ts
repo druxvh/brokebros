@@ -26,6 +26,7 @@ export async function GET(
     // build safe path and avoid double slashes
     const encodedMediaType = encodeURIComponent(mediaType);
     const encodedTimeWindow = encodeURIComponent(timeWindow);
+
     const url = `${baseUrl}/trending/${encodedMediaType}/${encodedTimeWindow}`;
 
     try {
@@ -48,9 +49,6 @@ export async function GET(
         // return with cache headers (s-maxage for CDN, stale-while-revalidate for UX)
         return NextResponse.json(data, {
             status: 200,
-            headers: {
-                "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300", // 1 min CDN, 5 min stale
-            },
         });
     } catch (err) {
         console.error('TMDB proxy error', err);

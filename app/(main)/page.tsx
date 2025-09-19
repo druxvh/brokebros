@@ -1,18 +1,16 @@
 import List from "@/components/general/List";
-import Loader from "@/components/general/Loader";
 import { MainCarousel } from "@/components/general/MainCarousel";
 import { TmdbItem, TmdbResponse } from "@/types/types";
-import { Suspense } from "react";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export default async function Home() {
-
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const baseUrl = process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
+  const apikey = process.env.TMDB_API_KEY
 
   const [movieRes, tvRes] = await Promise.all([
-    fetch(`${baseUrl}/api/trending/movie/day`, { next: { revalidate: 3600 } }), // 1 hour
-    fetch(`${baseUrl}/api/trending/tv/day`, { next: { revalidate: 3600 } }),
+    fetch(`${baseUrl}/trending/movie/day?api_key=${apikey}`, { next: { revalidate: 3600 } }), // 1 hour
+    fetch(`${baseUrl}/trending/tv/day?api_key=${apikey}`, { next: { revalidate: 3600 } }),
   ]);
 
   // handle partial failure: prefer to show whatever succeeds, or throw if both fail
@@ -31,10 +29,8 @@ export default async function Home() {
 
   return (
     <div className="space-y-8">
-      <Suspense fallback={<Loader />}>
-        <MainCarousel data={data} />
-        <List title="Trending Now" data={data} />
-      </Suspense>
+      <MainCarousel data={data} />
+      <List title="Trending Now" data={data} />
     </div>
   );
 }

@@ -50,16 +50,17 @@ export function Header() {
         <>
             <header className="h-16 px-2 flex justify-between items-center outline">
                 {/* Logo */}
-                <div className="w-full flex items-center justify-start gap-2 ">
+                <Link href={'/'} className="w-full flex items-center justify-start gap-2 ">
                     <Film className="size-6 text-red-500" />
-                    <Link href={'/'} className="text-xl text-primary/90 font-bold">BrokeBros</Link>
-                </div>
+                    <p className="text-xl text-primary/90 font-bold">BrokeBros</p>
+                </Link>
+                {/* Search */}
                 <Button
-                    size={"icon"}
                     variant={"ghost"}
                     onClick={() => setOpen((p) => !p)}
+                    className="cursor-pointer"
                 >
-                    {open ? <XIcon size={32} /> : <MagnifyingGlassIcon size={32} />}
+                    {open ? <XIcon size={32} weight="bold" /> : <MagnifyingGlassIcon size={32} weight="bold" />}
                 </Button>
             </header>
 
@@ -102,8 +103,8 @@ export function Header() {
                                     </div>
                                 )}
                             </div>
-                            <Button variant={"default"} type="submit" className="border-none outline-none ring-0 rounded-sm">
-                                <MagnifyingGlassIcon size={32} />
+                            <Button variant={"default"} type="submit" className="border-none outline-none ring-0 rounded-sm cursor-pointer">
+                                <MagnifyingGlassIcon size={32} weight="bold" />
                             </Button>
                         </form>
                     </motion.div>

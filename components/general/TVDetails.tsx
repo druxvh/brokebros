@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/original";
 
-export default function TVDetail({ tv }: { tv: Partial<TmdbTVItemById> }) {
+export default function TVDetails({ tv }: { tv: Partial<TmdbTVItemById> }) {
 
     const [selectedSeason, setSelectedSeason] = useState<number>(1);
     const [selectedEpisode, setSelectedEpisode] = useState<number>(1);
@@ -159,7 +159,7 @@ export default function TVDetail({ tv }: { tv: Partial<TmdbTVItemById> }) {
                 <iframe
                     onLoad={() => setIframeLoaded(true)}
                     key={`${id}-${selectedSeason}-${selectedEpisode}`}
-                    src={`https://vidfast.pro/tv/${id}/${selectedSeason}/${selectedEpisode}?autoPlay=true&title=true&poster=true&theme=16A085&nextButton=true&autoNext=true`}
+                    src={`https://vidfast.pro/tv/${id}/${selectedSeason}/${selectedEpisode}?autoPlay=true&title=true&poster=true&theme=16A085&nextButton=true&autoNext=true&sub=true`}
                     width="100%"
                     height="100%"
                     frameBorder="0"

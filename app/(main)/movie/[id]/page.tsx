@@ -1,7 +1,7 @@
 'use client'
 
 import Loader from '@/components/general/Loader'
-import MovieDetail from '@/components/general/MovieDetails'
+import MovieDetails from '@/components/general/MovieDetails'
 import { useQuery } from '@tanstack/react-query'
 import { Suspense, use } from 'react'
 
@@ -33,7 +33,7 @@ export default function Page({
 
     return (<>
         <Suspense fallback={<Loader />}>
-            <MovieDetail movie={data} />
+            <MovieDetails movie={data} />
         </Suspense>
     </>)
 }

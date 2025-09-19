@@ -4,6 +4,7 @@ import { TmdbItem } from "@/types/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
+import { Suspense } from "react";
 
 type Props = {
     title?: string;
@@ -12,17 +13,21 @@ type Props = {
 
 export default function List({ title, data }: Props) {
     return (
-        <section className="px-2 flex flex-col gap-5 my-6">
+        <section className="px-2 flex flex-col gap-5 py-5">
             <div className="flex items-center gap-2">
                 <div className="w-1 md:w-1.5 h-8 md:h-12 bg-red-600 rounded-xl" />
-                <h2 className="max-w-7xl text-2xl md:text-3xl font-bold  bg-gradient-to-b from-gray-200 to-gray-400 bg-clip-text text-transparent">
+                <h2 className="max-w-7xl text-2xl md:text-3xl font-bold  text-primary ">
                     {title ?? "Movie / TV-Show"}
                 </h2>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {data && data.length > 0 ? (
-                    data.map((item) => <ItemCard key={`${item.id}-${item.media_type ?? "m"}`} data={item} />)
+                    data.map((item) => (
+                        <Suspense key={`${item.id}-${item.media_type ?? "m"}`} fallback={<CardSkeleton />}>
+                            <ItemCard data={item} />
+                        </Suspense>
+                    ))
                 ) : (
                     <p className="col-span-full text-sm text-gray-500">No items found.</p>
                 )}
@@ -37,9 +42,9 @@ export function ItemCard({ data }: { data: TmdbItem }) {
 
     const router = useRouter()
 
-    function handleClick(item: TmdbItem) {
-        const media = item.media_type === 'movie' ? "movie" : 'tv'
-        const id = item.id
+    function handleClick() {
+        const id = data.id
+        const media = data.media_type === 'movie' ? "movie" : 'tv'
 
         // navigate
         router.push(`/${media}/${id}`)
@@ -57,8 +62,8 @@ export function ItemCard({ data }: { data: TmdbItem }) {
     const posterSrc = data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : null;
 
     return (
-        <button
-            onClick={() => handleClick(data)}
+        <div
+            onClick={handleClick}
             className="rounded-sm overflow-hidden shadow text-primary/90 cursor-pointer">
 
             <div className="relative w-full aspect-[2/3] rounded-sm">
@@ -96,6 +101,12 @@ export function ItemCard({ data }: { data: TmdbItem }) {
                     </div>
                 </div>
             </div>
-        </button>
+        </div>
     );
+}
+
+function CardSkeleton() {
+    return (
+        <div className="animate-pulse bg-muted rounded-sm overflow-hidden shadow aspect-2/3 h-full w-full" />
+    )
 }

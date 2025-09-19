@@ -1,7 +1,7 @@
 'use client'
 
 import Loader from '@/components/general/Loader'
-import TVDetail from '@/components/general/TVDetails'
+import TVDetails from '@/components/general/TVDetails'
 import { useQuery } from '@tanstack/react-query'
 import { Suspense, use } from 'react'
 
@@ -29,7 +29,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     return (
         <>
             <Suspense fallback={<Loader />}>
-                <TVDetail tv={data} />
+                <TVDetails tv={data} />
             </Suspense>
         </>
     )

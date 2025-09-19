@@ -52,7 +52,7 @@ export function FloatingDock({ items }: { items: DockItem[] }) {
                                     whileHover={{ y: -4, scale: 1.03 }}
                                     whileTap={{ scale: 0.97 }}
                                     className={cn(
-                                        'w-12 h-12 flex items-center justify-center rounded-lg transition-colors outline-none',
+                                        'w-12 h-12 flex items-center justify-center rounded-lg transition-colors outline-none cursor-pointer',
                                         active
                                             ? 'bg-primary text-primary-foreground shadow-md'
                                             : 'text-muted-foreground hover:text-primary'
@@ -82,17 +82,17 @@ export function FloatingDock({ items }: { items: DockItem[] }) {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                     aria-label="Primary mobile"
-                    className="mx-auto flex w-full items-center justify-between rounded-t-xl bg-muted/30 px-3 py-2 backdrop-blur-md shadow-lg"
+                    className="mx-auto flex w-full items-center justify-evenly rounded-t-xl bg-muted/30 px-3 py-2 backdrop-blur-md shadow-lg"
                 >
                     {items.map((it) => {
                         const active = pathname === it.href || pathname.startsWith(it.href + '/')
                         return (
-                            <Link key={it.href} href={it.href} className="flex-1">
+                            <Link key={it.href} href={it.href}>
                                 <button
                                     aria-current={active ? 'page' : undefined}
                                     title={it.title}
                                     className={cn(
-                                        'flex w-full flex-col items-center gap-1 rounded px-2 py-2 text-xs transition-colors',
+                                        'flex flex-col items-center justify-evenly gap-1 rounded px-2 py-2 text-xs transition-colors cursor-pointer',
                                         active ? 'text-primary' : 'text-muted-foreground'
                                     )}
                                 >

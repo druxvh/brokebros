@@ -64,7 +64,7 @@ export function MainCarousel({ data }: {
     return (
         <Carousel
             plugins={[plugin.current]}
-            className="w-full h-fit max-w-4xl mx-auto bg-black"
+            className="w-full h-fit max-w-4xl mx-auto bg-black my-0 p-0"
             onMouseEnter={() => plugin.current?.stop()}
             onMouseLeave={() => plugin.current?.reset()}
         >
@@ -74,7 +74,6 @@ export function MainCarousel({ data }: {
                     const imgSrc = imagePath ? `${TMDB_IMG_BASE}${imagePath}` : null;
                     const title = item.title ?? item.name ?? "Untitled";
                     const overview = item.overview ?? "";
-
 
                     return (
                         <CarouselItem

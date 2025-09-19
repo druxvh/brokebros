@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { TmdbItem } from "@/types/types";
+import { TmdbMovieItemById } from "@/types/types";
 import { useState } from "react";
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/original";
 
-export default function MovieDetail({ movie }: { movie: TmdbItem }) {
+export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemById> }) {
 
     const [iframeLoaded, setIframeLoaded] = useState(false);
 
     const id = movie.id
-    const title = movie.title ?? movie.name;
+    const title = movie.title;
     const backdrop = movie.backdrop_path ?? movie.poster_path;
     const poster = movie.poster_path ?? movie.backdrop_path;
 
@@ -66,7 +66,7 @@ export default function MovieDetail({ movie }: { movie: TmdbItem }) {
                             <div>
                                 <h1 className="text-2xl font-extrabold text-white sm:text-3xl">{title}</h1>
                                 <p className="mt-1 text-sm text-neutral-300">
-                                    {movie.release_date ?? movie.first_air_date}
+                                    {movie.release_date}
                                 </p>
                                 <div className="mt-3 flex flex-wrap items-center gap-3">
                                     <span className="rounded-md bg-neutral-900/60 px-2 py-1 text-sm text-neutral-200">⭐ {Number(movie.vote_average ?? 0).toFixed(1)}</span>
@@ -91,7 +91,7 @@ export default function MovieDetail({ movie }: { movie: TmdbItem }) {
                 <iframe
                     onLoad={() => setIframeLoaded(true)}
                     key={id}
-                    src={`https://vidfast.pro/movie/${id}`}
+                    src={`https://vidfast.pro/movie/${id}?autoPlay=true&title=true&poster=true&theme=16A085&sub=true`}
                     width="100%"
                     height="100%"
                     frameBorder="0"
