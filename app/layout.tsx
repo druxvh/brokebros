@@ -35,29 +35,6 @@ export const metadata: Metadata = {
   authors: [{ name: "drx" }],
   creator: "drx",
   publisher: "BrokeBros",
-
-  // openGraph: {
-  //   type: "website",
-  //   url: process.env.NEXT_PUBLIC_SITE_URL,
-  //   title: "BrokeBros – Discover Movies & TV Shows for Broke People",
-  //   description:
-  //     "Discover trending and top-rated movies & TV shows with BrokeBros. Get ratings, details, and more in one place.",
-  //   siteName: "BrokeBros",
-  //   images: [
-  //     {
-  //       url: "/og-image.png", // place an OG image in public/
-  //       width: 1200,
-  //       height: 630,
-  //       alt: "BrokeBros – Discover Movies & TV Shows for Broke People",
-  //     },
-  //   ],
-  // },
-
-  // icons: {
-  //   icon: "/favicon.ico",
-  //   apple: "/apple-touch-icon.png",
-  // },
-
 };
 
 export default function RootLayout({
