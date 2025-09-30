@@ -48,7 +48,7 @@ export function Header() {
 
     return (
         <>
-            <header className="h-16 px-2 flex justify-between items-center outline">
+            <header className="h-16 px-2 flex justify-between items-center">
                 {/* Logo */}
                 <Link href={'/'} className="w-full flex items-center justify-start gap-2 ">
                     <Film className="size-6 text-red-500" />

@@ -18,7 +18,7 @@ export default function Page() {
             if (!res.ok) throw new Error("Popular fetch failed")
             return res.json()
         },
-        staleTime: 1000 * 60 * 60,
+        staleTime: 1000 * 60 * 60 * 24,
     });
     const onTheAir = useQuery({
         queryKey: ['tv', 'on_the_air'],
@@ -27,7 +27,7 @@ export default function Page() {
             if (!res.ok) throw new Error("On The Air fetch failed")
             return res.json()
         },
-        staleTime: 1000 * 60 * 60,
+        staleTime: 1000 * 60 * 60 * 24,
     });
     const topRated = useQuery({
         queryKey: ['tv', 'top_rated'],
@@ -36,7 +36,7 @@ export default function Page() {
             if (!res.ok) throw new Error("Top Rated fetch failed")
             return res.json()
         },
-        staleTime: 1000 * 60 * 60,
+        staleTime: 1000 * 60 * 60 * 24,
     });
 
     if (popular.isLoading || onTheAir.isLoading || topRated.isLoading) return <Loader />

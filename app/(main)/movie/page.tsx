@@ -17,7 +17,7 @@ export default function Page() {
             if (!res.ok) throw new Error("Popular fetch failed")
             return res.json()
         },
-        staleTime: 1000 * 60 * 60,
+        staleTime: 1000 * 60 * 60 * 24,
     });
 
     const topRated = useQuery({
@@ -27,7 +27,7 @@ export default function Page() {
             if (!res.ok) throw new Error("Popular fetch failed")
             return res.json()
         },
-        staleTime: 1000 * 60 * 60,
+        staleTime: 1000 * 60 * 60 * 24,
     });
 
     if (popular.isLoading || topRated.isLoading) return <Loader />

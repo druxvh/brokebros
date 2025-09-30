@@ -64,11 +64,11 @@ export function MainCarousel({ data }: {
     return (
         <Carousel
             plugins={[plugin.current]}
-            className="w-full h-fit max-w-4xl mx-auto bg-black my-0 p-0"
+            className="w-full h-fit mx-auto bg-black my-0 p-0"
             onMouseEnter={() => plugin.current?.stop()}
             onMouseLeave={() => plugin.current?.reset()}
         >
-            <CarouselContent className="bg-black p-0 m-0">
+            <CarouselContent className="bg-black p-0 m-0 w-full max-h-[75dvh]">
                 {topItems.map((item, index) => {
                     const imagePath = item.backdrop_path ?? item.poster_path;
                     const imgSrc = imagePath ? `${TMDB_IMG_BASE}${imagePath}` : null;
@@ -79,18 +79,18 @@ export function MainCarousel({ data }: {
                         <CarouselItem
                             key={item.id ?? index}
                             onClick={() => handleClick(item)}
-                            className="p-0 m-0 bg-black"
+                            className="p-0 m-0 bg-black relative"
                         >
-                            <Card className="rounded-none overflow-hidden bg-black h-fit p-0 border-0">
+                            <Card className="relative rounded-none overflow-hidden bg-black h-fit p-0 border-0">
                                 {/* parent must be relative for next/image fill */}
-                                <CardContent className="relative aspect-video p-0 bg-black overflow-hidden">
+                                <CardContent className="aspect-video p-0 bg-black overflow-hidden">
                                     {imgSrc ? (
                                         <Image
                                             src={imgSrc}
                                             alt={title}
                                             fill
                                             sizes="(max-width: 1024px) 100vw, 1024px"
-                                            className="object-cover block"
+                                            className="object-cover block background-center"
                                             style={{ objectFit: "cover" }}
                                             priority={index === 0}
                                         />
@@ -100,21 +100,21 @@ export function MainCarousel({ data }: {
                                         </div>
                                     )}
 
-                                    <div className="absolute left-0 bottom-0 sm:left-4 sm:bottom-4 w-full sm:rounded-sm bg-black/60 p-4 text-primary/90 backdrop-blur-sm sm:max-w-[50%]">
-                                        <h3 className="text-md sm:text-lg font-semibold leading-tight">{title}</h3>
-                                        {overview && (
-                                            <p className=" hidden sm:block mt-1 text-[8px] sm:text-sm line-clamp-2 text-neutral-200 text-wrap">{overview}</p>
-                                        )}
-                                        { }
-                                        <div className="mt-2 flex items-center gap-3 text-xs text-neutral-300">
-                                            <span className="inline-flex items-center rounded-md bg-neutral-900/40 px-2 py-1">
-                                                ⭐ {Number(item.vote_average ?? 0).toFixed(1)}
-                                            </span>
-                                            <span>{item.release_date ?? item.first_air_date ?? ""}</span>
-                                        </div>
-                                    </div>
                                 </CardContent>
                             </Card>
+                            <div className="absolute left-0 bottom-0 sm:left-4 sm:bottom-4 w-full sm:rounded-sm bg-black/60 p-4 text-primary/90 backdrop-blur-sm sm:max-w-[50%]">
+                                <h3 className="text-md sm:text-lg lg:text-2xl xl:text-3xl font-semibold leading-tight">{title}</h3>
+                                {overview && (
+                                    <p className=" hidden sm:block mt-1 text-[8px] sm:text-sm lg:text-base xl:text-lg line-clamp-2 text-neutral-200 text-wrap">{overview}</p>
+                                )}
+                                { }
+                                <div className="mt-2 flex items-center gap-3 text-xs lg:text-sm text-neutral-300">
+                                    <span className="inline-flex items-center rounded-md bg-neutral-900/40 px-2 py-1">
+                                        ⭐ {Number(item.vote_average ?? 0).toFixed(1)}
+                                    </span>
+                                    <span>{item.release_date ?? item.first_air_date ?? ""}</span>
+                                </div>
+                            </div>
                         </CarouselItem>
                     );
                 })}

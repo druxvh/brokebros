@@ -85,7 +85,7 @@ export function ItemCard({ data }: { data: TmdbItem }) {
                 <Badge variant={"secondary"} className="absolute left-2 top-2 px-2 rounded-sm">{mediaType}</Badge>
             </div>
 
-            <div className="py-2 outline min-h-10">
+            <div className="py-2 min-h-10">
                 <h3 className="text-center text-xs sm:text-base h-fit font-semibold truncate ">{title}</h3>
 
                 <div className="flex items-center justify-between mt-2 text-[10px] sm:text-xs text-gray-600 dark:text-gray-300">
