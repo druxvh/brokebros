@@ -159,7 +159,7 @@ export default function TVDetails({ tv }: { tv: Partial<TmdbTVItemById> }) {
                 <iframe
                     onLoad={() => setIframeLoaded(true)}
                     key={`${id}-${selectedSeason}-${selectedEpisode}`}
-                    src={`https://vidfast.pro/tv/${id}/${selectedSeason}/${selectedEpisode}?autoPlay=true&title=true&poster=true&theme=16A085&nextButton=true&autoNext=true&sub=true`}
+                    src={`https://vidfast.vc/tv/${id}/${selectedSeason}/${selectedEpisode}?autoPlay=true&title=true&poster=true&theme=16A085&nextButton=true&autoNext=true&sub=true`}
                     width="100%"
                     height="100%"
                     frameBorder="0"

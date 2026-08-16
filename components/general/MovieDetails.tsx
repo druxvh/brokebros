@@ -91,7 +91,7 @@ export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemBy
                 <iframe
                     onLoad={() => setIframeLoaded(true)}
                     key={id}
-                    src={`https://vidfast.pro/movie/${id}?autoPlay=true&title=true&poster=true&theme=16A085&sub=true`}
+                    src={`https://vidfast.vc/movie/${id}?autoPlay=true&title=true&poster=true&theme=16A085&sub=true`}
                     width="100%"
                     height="100%"
                     frameBorder="0"
