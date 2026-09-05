@@ -2,18 +2,34 @@
 
 import Image from "next/image";
 import { TmdbMovieItemById } from "@/types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addToRecentlyWatched } from "@/lib/recentlyWatched";
 
 const TMDB_IMG = "https://image.tmdb.org/t/p/original";
 
 export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemById> }) {
+    const id = movie.id ?? 0;
+    const title = movie.title ?? "Unknown";
+    const backdrop = movie.backdrop_path ?? movie.poster_path;
+    const poster = movie.poster_path ?? movie.backdrop_path;
 
     const [iframeLoaded, setIframeLoaded] = useState(false);
 
-    const id = movie.id
-    const title = movie.title;
-    const backdrop = movie.backdrop_path ?? movie.poster_path;
-    const poster = movie.poster_path ?? movie.backdrop_path;
+    // Save to localStorage on mount
+    useEffect(() => {
+        if (!id) return;
+
+        addToRecentlyWatched({
+            id,
+            mediaType: "movie",
+            title,
+            name: title,
+            posterPath: poster ?? null,
+            backdropPath: backdrop ?? null,
+            currentTime: 0,
+            duration: undefined,
+        });
+    }, [id, title, poster, backdrop]);
 
     return (
         <div className="mx-auto max-w-6xl">
@@ -24,7 +40,7 @@ export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemBy
                     <div className="relative h-72 sm:h-[420px] md:h-[520px]">
                         <Image
                             src={`${TMDB_IMG}${backdrop}`}
-                            alt={title || "Movie Image"}
+                            alt={title}
                             sizes="(max-width: 1024px) 100vw, 1024px"
                             fill
                             style={{ objectFit: "cover" }}
@@ -39,13 +55,12 @@ export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemBy
                 {/* content */}
                 <div className="relative z-10 -mt-15 flex flex-col sm:flex-row gap-6 pb-8 px-4">
                     {/* poster */}
-                    <div
-                        className="rounded-sm overflow-hidden shadow text-primary/90">
+                    <div className="rounded-sm overflow-hidden shadow text-primary/90">
                         <div className="relative aspect-[2/3]  h-[220px] sm:h-[320px] p-0">
                             {poster ? (
                                 <Image
                                     src={`${TMDB_IMG}${poster}`}
-                                    alt={title || "fkvj"}
+                                    alt={title}
                                     fill
                                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                                     style={{ objectFit: "cover" }}
@@ -59,7 +74,6 @@ export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemBy
                         </div>
                     </div>
 
-
                     {/* meta */}
                     <div className="flex flex-1 flex-col gap-3 sm:mx-6">
                         <div className="flex items-start justify-between gap-4">
@@ -70,6 +84,11 @@ export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemBy
                                 </p>
                                 <div className="mt-3 flex flex-wrap items-center gap-3">
                                     <span className="rounded-md bg-neutral-900/60 px-2 py-1 text-sm text-neutral-200">⭐ {Number(movie.vote_average ?? 0).toFixed(1)}</span>
+                                    {movie.runtime && movie.runtime > 0 && (
+                                        <span className="rounded-md bg-neutral-900/60 px-2 py-1 text-sm text-neutral-200">
+                                            {movie.runtime} min
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -79,11 +98,12 @@ export default function MovieDetails({ movie }: { movie: Partial<TmdbMovieItemBy
                     </div>
                 </div>
             </div>
+
             {/* vid */}
             <div className="relative not-only:w-full h-full aspect-video bg-none px-4 mt-10">
                 {!iframeLoaded && poster && (
                     <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40">
-                        <Image src={`${TMDB_IMG}${poster}`} alt={title || "movie"} fill style={{ objectFit: 'cover' }} />
+                        <Image src={`${TMDB_IMG}${poster}`} alt={title} fill style={{ objectFit: 'cover' }} />
                         <div className="absolute inset-0 bg-black/60" />
                         <div className="z-20 text-white">Loading player...</div>
                     </div>

@@ -1,8 +1,9 @@
 import List from "@/components/general/List";
 import { MainCarousel } from "@/components/general/MainCarousel";
+import { ContinueWatching } from "@/components/general/ContinueWatching";
 import { TmdbItem, TmdbResponse } from "@/types/types";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const baseUrl = process.env.TMDB_BASE_URL || "https://api.themoviedb.org/3";
@@ -83,6 +84,9 @@ export default async function Home() {
     <div className="space-y-8">
       {/* Hero Carousel */}
       <MainCarousel data={mergedIndia} />
+
+      {/* Continue Watching */}
+      <ContinueWatching limit={10} />
 
       {/* Indian Sections */}
       <List title="Trending TV Shows in India" data={trendingTVIN} />
